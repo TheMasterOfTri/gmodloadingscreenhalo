@@ -12,6 +12,7 @@ body {
     color: #c8dde8;
     font-family: 'Courier New', Courier, monospace;
     height: 100vh;
+    width: 100vw;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -36,107 +37,119 @@ body::before {
     z-index: 100;
 }
 
+/* Top accent bar */
+.header { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: #00e5c8; z-index: 50; }
+
 /* Corner brackets */
-.corner { position: fixed; width: 40px; height: 40px; }
-.corner::before, .corner::after {
-    content: '';
-    position: absolute;
-    background: #00e5c8;
-}
+.corner { position: fixed; width: 40px; height: 40px; z-index: 50; }
+.corner::before, .corner::after { content: ''; position: absolute; background: #00e5c8; }
 .corner::before { width: 100%; height: 2px; top: 0; left: 0; }
 .corner::after  { width: 2px; height: 100%; top: 0; left: 0; }
-.corner.tr { top: 16px; right: 16px; transform: rotate(90deg); }
 .corner.tl { top: 16px; left: 16px; }
-.corner.br { bottom: 16px; right: 16px; transform: rotate(180deg); }
-.corner.bl { bottom: 16px; left: 16px; transform: rotate(270deg); }
+.corner.tr { top: 16px; right: 16px; transform: rotate(90deg); }
+.corner.bl { bottom: 44px; left: 16px; transform: rotate(270deg); }
+.corner.br { bottom: 44px; right: 16px; transform: rotate(180deg); }
 
-/* Header bar */
-.header {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: #00e5c8;
-}
-.footer-bar {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: 1px;
-    background: rgba(0,229,200,0.3);
-}
+/* Subtle horizontal grid lines */
+.gridline { position: fixed; left: 0; right: 0; height: 1px; background: rgba(0,229,200,0.05); z-index: 1; }
 
-/* Status ticker */
-.ticker {
+/* Top-left info */
+.info-left {
     position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: 28px;
-    background: rgba(0,10,14,0.95);
-    border-top: 1px solid rgba(0,229,200,0.25);
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    font-size: 11px;
-    color: rgba(0,229,200,0.6);
-    letter-spacing: 0.08em;
+    top: 20px; left: 22px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(0,229,200,0.4);
+    line-height: 2;
     z-index: 50;
 }
-.ticker-inner {
-    white-space: nowrap;
-    animation: ticker 28s linear infinite;
-    padding-left: 100%;
-}
-@keyframes ticker {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-}
+.info-left span { display: block; }
 
-/* Main content */
+/* Top-right info */
+.info-right {
+    position: fixed;
+    top: 20px; right: 22px;
+    text-align: right;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(0,229,200,0.4);
+    line-height: 2;
+    z-index: 50;
+}
+.info-right span { display: block; }
+
+/* ── Main centred block ── */
 .main {
     text-align: center;
     position: relative;
     z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-/* UNSC Logo ring */
+/* Ring container — fixed size so it never overlaps text below */
 .ring-wrap {
     position: relative;
-    width: 160px;
-    height: 160px;
-    margin: 0 auto 32px;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 28px;
+    flex-shrink: 0;
 }
-.ring-wrap svg {
+
+/* Outer SVG ring spins */
+.ring-svg {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
-    animation: spin 12s linear infinite;
+    animation: spin 14s linear infinite;
 }
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-}
+
+/* Inner logo counter-spins so it stays upright */
 .ring-inner {
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    animation: spin 12s linear infinite reverse;
-}
-.ring-inner img, .ring-logo {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 2px solid rgba(0,229,200,0.4);
-    background: #060a0d;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: #00e5c8;
-    text-align: center;
-    line-height: 1.4;
+    animation: spin 14s linear infinite reverse;
 }
 
-/* Community name */
+.ring-logo {
+    width: 82px;
+    height: 82px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,229,200,0.5);
+    background: #060a0d;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+}
+
+.ring-logo .logo-top {
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: #00e5c8;
+    line-height: 1;
+}
+
+.ring-logo .logo-bot {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: rgba(0,229,200,0.6);
+    line-height: 1;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+
+/* Text block — sits cleanly below the ring */
 .community {
     font-size: 11px;
     letter-spacing: 0.3em;
@@ -144,157 +157,147 @@ body::before {
     text-transform: uppercase;
     margin-bottom: 6px;
 }
+
 .title {
-    font-size: 36px;
+    font-size: 52px;
     font-weight: 700;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.08em;
     color: #e0f0f8;
     text-transform: uppercase;
     line-height: 1;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
 }
+
 .subtitle {
-    font-size: 12px;
-    letter-spacing: 0.25em;
-    color: rgba(0,229,200,0.6);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: rgba(0,229,200,0.5);
     text-transform: uppercase;
-    margin-bottom: 40px;
+    margin-bottom: 44px;
 }
 
 /* Progress */
 .progress-wrap {
-    width: 440px;
-    max-width: 90vw;
-    margin: 0 auto 16px;
+    width: 460px;
+    max-width: 88vw;
+    margin-bottom: 14px;
 }
+
 .progress-label {
     display: flex;
     justify-content: space-between;
     font-size: 10px;
     letter-spacing: 0.12em;
-    color: rgba(0,229,200,0.5);
-    margin-bottom: 6px;
+    color: rgba(0,229,200,0.45);
+    margin-bottom: 7px;
 }
+
 .progress-track {
-    height: 3px;
+    height: 2px;
     background: rgba(0,229,200,0.1);
-    position: relative;
     overflow: hidden;
 }
+
 .progress-fill {
     height: 100%;
     background: #00e5c8;
     width: 0%;
-    transition: width 0.3s ease;
-    position: relative;
-}
-.progress-fill::after {
-    content: '';
-    position: absolute;
-    right: 0; top: 0; bottom: 0;
-    width: 20px;
-    background: linear-gradient(to right, transparent, rgba(0,229,200,0.8));
+    transition: width 0.25s ease;
 }
 
 .status-text {
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: rgba(0,229,200,0.45);
-    height: 16px;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: rgba(0,229,200,0.4);
+    height: 15px;
     text-align: center;
 }
 
-/* Server info strip */
-.info-strip {
+/* Bottom ticker */
+.ticker {
     position: fixed;
-    top: 24px;
-    right: 24px;
-    text-align: right;
+    bottom: 0; left: 0; right: 0;
+    height: 30px;
+    background: rgba(2,8,12,0.97);
+    border-top: 1px solid rgba(0,229,200,0.2);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
     font-size: 10px;
-    letter-spacing: 0.1em;
-    color: rgba(0,229,200,0.35);
-    line-height: 1.9;
+    color: rgba(0,229,200,0.5);
+    letter-spacing: 0.08em;
     z-index: 50;
 }
-.info-strip span {
-    display: block;
+
+.ticker-inner {
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+    padding-left: 100%;
 }
 
-/* Left info */
-.info-left {
-    position: fixed;
-    top: 24px;
-    left: 24px;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: rgba(0,229,200,0.35);
-    line-height: 1.9;
-    z-index: 50;
-}
-.info-left span { display: block; }
-
-/* Decorative grid lines */
-.grid-h {
-    position: fixed;
-    left: 0; right: 0;
-    height: 1px;
-    background: rgba(0,229,200,0.05);
-    z-index: 1;
+@keyframes ticker {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
 }
 </style>
 </head>
 <body>
 
 <div class="header"></div>
-<div class="footer-bar"></div>
 <div class="corner tl"></div>
 <div class="corner tr"></div>
 <div class="corner bl"></div>
 <div class="corner br"></div>
-
-<div class="grid-h" style="top:25%"></div>
-<div class="grid-h" style="top:75%"></div>
+<div class="gridline" style="top:26%"></div>
+<div class="gridline" style="top:74%"></div>
 
 <div class="info-left">
     <span>// UNSC TACTICAL GRID</span>
-    <span id="time">--:--:--</span>
+    <span id="clock">--:--:--</span>
     <span>BUILD 4.7.2</span>
 </div>
 
-<div class="info-strip">
+<div class="info-right">
     <span>HALORP SERVER</span>
-    <span id="players">-- / 64 ONLINE</span>
+    <span>-- / 64 ONLINE</span>
 </div>
 
 <div class="main">
+
+    <!-- Ring sits fully above the text -->
     <div class="ring-wrap">
-        <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="80" cy="80" r="74" stroke="rgba(0,229,200,0.12)" stroke-width="1"/>
-            <circle cx="80" cy="80" r="74" stroke="rgba(0,229,200,0.5)" stroke-width="1.5"
-                stroke-dasharray="12 6" stroke-dashoffset="0"/>
-            <circle cx="80" cy="80" r="62" stroke="rgba(0,229,200,0.08)" stroke-width="1"/>
-            <!-- tick marks -->
-            <g stroke="rgba(0,229,200,0.6)" stroke-width="1.5">
-                <line x1="80" y1="6" x2="80" y2="14"/>
-                <line x1="80" y1="146" x2="80" y2="154"/>
-                <line x1="6" y1="80" x2="14" y2="80"/>
-                <line x1="146" y1="80" x2="154" y2="80"/>
+        <svg class="ring-svg" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- outer dashed ring -->
+            <circle cx="75" cy="75" r="70" stroke="rgba(0,229,200,0.45)" stroke-width="1.5" stroke-dasharray="10 5"/>
+            <!-- inner faint ring -->
+            <circle cx="75" cy="75" r="55" stroke="rgba(0,229,200,0.1)" stroke-width="1"/>
+            <!-- cardinal tick marks -->
+            <g stroke="rgba(0,229,200,0.7)" stroke-width="1.5">
+                <line x1="75" y1="5"   x2="75" y2="16"/>
+                <line x1="75" y1="134" x2="75" y2="145"/>
+                <line x1="5"  y1="75"  x2="16" y2="75"/>
+                <line x1="134" y1="75" x2="145" y2="75"/>
             </g>
-            <g stroke="rgba(0,229,200,0.3)" stroke-width="1">
-                <line x1="137.4" y1="22.6" x2="131.6" y2="28.4"/>
-                <line x1="22.6" y1="22.6" x2="28.4" y2="28.4"/>
-                <line x1="137.4" y1="137.4" x2="131.6" y2="131.6"/>
-                <line x1="22.6" y1="137.4" x2="28.4" y2="131.6"/>
+            <!-- diagonal tick marks -->
+            <g stroke="rgba(0,229,200,0.25)" stroke-width="1">
+                <line x1="124.5" y1="25.5" x2="119" y2="31"/>
+                <line x1="25.5"  y1="25.5" x2="31"  y2="31"/>
+                <line x1="124.5" y1="124.5" x2="119" y2="119"/>
+                <line x1="25.5"  y1="124.5" x2="31"  y2="119"/>
             </g>
         </svg>
         <div class="ring-inner">
-            <div class="ring-logo">MGC<br/>HALORP</div>
+            <div class="ring-logo">
+                <span class="logo-top">MGC</span>
+                <span class="logo-bot">HALORP</span>
+            </div>
         </div>
     </div>
 
-    <div class="community">Multi-Gaming Community // presents</div>
+    <!-- Text block — completely separate from ring -->
+    <div class="community">Multi-Gaming Community &nbsp;//&nbsp; presents</div>
     <div class="title">HaloRP</div>
-    <div class="subtitle">// Personnel &amp; Deployment System // Encrypted Channel Active</div>
+    <div class="subtitle">// Personnel &amp; Deployment System &nbsp;//&nbsp; Encrypted Channel Active</div>
 
     <div class="progress-wrap">
         <div class="progress-label">
@@ -307,11 +310,12 @@ body::before {
     </div>
 
     <div class="status-text" id="status">INITIALIZING TACTICAL GRID...</div>
+
 </div>
 
 <div class="ticker">
     <div class="ticker-inner">
-        &nbsp;&nbsp;&nbsp;// UNSC TACTICAL COMMAND SYSTEM — ENCRYPTED CHANNEL ACTIVE &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; MULTI-GAMING COMMUNITY — HALORP SERVER &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; PERSONNEL &amp; DEPLOYMENT SYSTEM BUILD 4.7.2 &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; SECTOR ALPHA ONLINE &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; ALL STATIONS REPORT READY &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; COVENANT THREAT LEVEL: ELEVATED &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; UNSC TACTICAL GRID — ENCRYPTED CHANNEL ACTIVE &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; MULTI-GAMING COMMUNITY — HALORP SERVER &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;// UNSC TACTICAL COMMAND SYSTEM — ENCRYPTED CHANNEL ACTIVE &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; MULTI-GAMING COMMUNITY — HALORP SERVER &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; PERSONNEL &amp; DEPLOYMENT SYSTEM BUILD 4.7.2 &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; ALL STATIONS REPORT READY &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; COVENANT THREAT LEVEL: ELEVATED &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; SECTOR ALPHA ONLINE &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; UNSC TACTICAL COMMAND SYSTEM — ENCRYPTED CHANNEL ACTIVE &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; MULTI-GAMING COMMUNITY — HALORP SERVER &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;
     </div>
 </div>
 
@@ -330,50 +334,35 @@ var statuses = [
     "CONNECTION ESTABLISHED — WELCOME, OPERATIVE"
 ];
 
-var progress = 0;
-var statusIdx = 0;
+var progress = 0, statusIdx = 0;
 var bar = document.getElementById('bar');
 var pct = document.getElementById('pct');
 var statusEl = document.getElementById('status');
 
 function tick() {
     if (progress >= 100) return;
-    var inc = Math.random() * 3 + 0.5;
-    progress = Math.min(100, progress + inc);
+    progress = Math.min(100, progress + Math.random() * 2.5 + 0.4);
     bar.style.width = progress + '%';
     pct.textContent = Math.floor(progress) + '%';
-
-    var newIdx = Math.floor((progress / 100) * (statuses.length - 1));
-    if (newIdx !== statusIdx && newIdx < statuses.length) {
-        statusIdx = newIdx;
+    var n = Math.floor((progress / 100) * (statuses.length - 1));
+    if (n !== statusIdx && n < statuses.length) {
+        statusIdx = n;
         statusEl.textContent = statuses[statusIdx];
     }
-
-    setTimeout(tick, Math.random() * 120 + 40);
+    setTimeout(tick, Math.random() * 130 + 40);
 }
 
-function updateTime() {
+function updateClock() {
     var now = new Date();
     var h = String(now.getHours()).padStart(2,'0');
     var m = String(now.getMinutes()).padStart(2,'0');
     var s = String(now.getSeconds()).padStart(2,'0');
-    document.getElementById('time').textContent = h + ':' + m + ':' + s;
+    document.getElementById('clock').textContent = h + ':' + m + ':' + s;
 }
 
 tick();
-setInterval(updateTime, 1000);
-updateTime();
-
-// GMod loading integration
-if (typeof gameName !== 'undefined') {
-    document.getElementById('players').textContent =
-        (typeof serverName !== 'undefined' ? serverName : 'HALORP');
-}
-if (typeof SetStatusChanged !== 'undefined') {
-    SetStatusChanged = function(status) {
-        statusEl.textContent = '// ' + status.toUpperCase();
-    };
-}
+setInterval(updateClock, 1000);
+updateClock();
 </script>
 </body>
 </html>
