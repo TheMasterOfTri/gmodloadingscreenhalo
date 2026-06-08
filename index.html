@@ -2,45 +2,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Multi-Gaming Community — HaloRP</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 body {
     background: #060a0d;
-    color: #c8dde8;
     font-family: 'Courier New', Courier, monospace;
-    height: 100vh;
-    width: 100vw;
+    height: 100vh; width: 100vw;
     overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
     position: relative;
 }
-
-/* Scanline overlay */
 body::before {
     content: '';
-    position: fixed;
-    inset: 0;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.08) 2px,
-        rgba(0,0,0,0.08) 4px
-    );
-    pointer-events: none;
-    z-index: 100;
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.08) 2px, rgba(0,0,0,0.08) 4px);
+    pointer-events: none; z-index: 100;
 }
-
-/* Top accent bar */
 .header { position: fixed; top: 0; left: 0; right: 0; height: 3px; background: #00e5c8; z-index: 50; }
-
-/* Corner brackets */
 .corner { position: fixed; width: 40px; height: 40px; z-index: 50; }
 .corner::before, .corner::after { content: ''; position: absolute; background: #00e5c8; }
 .corner::before { width: 100%; height: 2px; top: 0; left: 0; }
@@ -49,204 +29,30 @@ body::before {
 .corner.tr { top: 16px; right: 16px; transform: rotate(90deg); }
 .corner.bl { bottom: 44px; left: 16px; transform: rotate(270deg); }
 .corner.br { bottom: 44px; right: 16px; transform: rotate(180deg); }
-
-/* Subtle horizontal grid lines */
-.gridline { position: fixed; left: 0; right: 0; height: 1px; background: rgba(0,229,200,0.05); z-index: 1; }
-
-/* Top-left info */
-.info-left {
-    position: fixed;
-    top: 20px; left: 22px;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: rgba(0,229,200,0.4);
-    line-height: 2;
-    z-index: 50;
-}
+.gridline { position: fixed; left: 0; right: 0; height: 1px; background: rgba(0,229,200,0.05); }
+.info-left { position: fixed; top: 20px; left: 22px; font-size: 10px; letter-spacing: 0.1em; color: rgba(0,229,200,0.4); line-height: 2; z-index: 50; }
 .info-left span { display: block; }
-
-/* Top-right info */
-.info-right {
-    position: fixed;
-    top: 20px; right: 22px;
-    text-align: right;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    color: rgba(0,229,200,0.4);
-    line-height: 2;
-    z-index: 50;
-}
+.info-right { position: fixed; top: 20px; right: 22px; text-align: right; font-size: 10px; letter-spacing: 0.1em; color: rgba(0,229,200,0.4); line-height: 2; z-index: 50; }
 .info-right span { display: block; }
-
-/* ── Main centred block ── */
-.main {
-    text-align: center;
-    position: relative;
-    z-index: 10;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Ring container — fixed size so it never overlaps text below */
-.ring-wrap {
-    position: relative;
-    width: 150px;
-    height: 150px;
-    margin-bottom: 28px;
-    flex-shrink: 0;
-}
-
-/* Outer SVG ring spins */
-.ring-svg {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    animation: spin 14s linear infinite;
-}
-
-/* Inner logo — static, no animation */
-.ring-inner {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.ring-logo {
-    width: 82px;
-    height: 82px;
-    border-radius: 50%;
-    border: 1px solid rgba(0,229,200,0.5);
-    background: #060a0d;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-}
-
-.ring-logo .logo-top {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    color: #00e5c8;
-    line-height: 1;
-}
-
-.ring-logo .logo-bot {
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    color: rgba(0,229,200,0.6);
-    line-height: 1;
-}
-
-@keyframes spin {
-    from { transform: rotate(0deg); }
-    to   { transform: rotate(360deg); }
-}
-
-/* Text block — sits cleanly below the ring */
-.community {
-    font-size: 11px;
-    letter-spacing: 0.3em;
-    color: rgba(0,229,200,0.5);
-    text-transform: uppercase;
-    margin-bottom: 6px;
-}
-
-.title {
-    font-size: 52px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: #e0f0f8;
-    text-transform: uppercase;
-    line-height: 1;
-    margin-bottom: 6px;
-}
-
-.subtitle {
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    color: rgba(0,229,200,0.5);
-    text-transform: uppercase;
-    margin-bottom: 44px;
-}
-
-/* Progress */
-.progress-wrap {
-    width: 460px;
-    max-width: 88vw;
-    margin-bottom: 14px;
-}
-
-.progress-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    color: rgba(0,229,200,0.45);
-    margin-bottom: 7px;
-}
-
-.progress-track {
-    height: 2px;
-    background: rgba(0,229,200,0.1);
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    background: #00e5c8;
-    width: 0%;
-    transition: width 0.25s ease;
-}
-
-.status-text {
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    color: rgba(0,229,200,0.4);
-    height: 15px;
-    text-align: center;
-}
-
-/* Bottom ticker */
-.ticker {
-    position: fixed;
-    bottom: 0; left: 0; right: 0;
-    height: 30px;
-    background: rgba(2,8,12,0.97);
-    border-top: 1px solid rgba(0,229,200,0.2);
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-    font-size: 10px;
-    color: rgba(0,229,200,0.5);
-    letter-spacing: 0.08em;
-    z-index: 50;
-}
-
-.ticker-inner {
-    white-space: nowrap;
-    animation: ticker 30s linear infinite;
-    padding-left: 100%;
-}
-
-@keyframes ticker {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-}
+.main { text-align: center; z-index: 10; display: flex; flex-direction: column; align-items: center; }
+.community { font-size: 11px; letter-spacing: 0.3em; color: rgba(0,229,200,0.5); text-transform: uppercase; margin-bottom: 6px; }
+.title { font-size: 52px; font-weight: 700; letter-spacing: 0.08em; color: #e0f0f8; text-transform: uppercase; line-height: 1; margin-bottom: 6px; }
+.subtitle { font-size: 11px; letter-spacing: 0.2em; color: rgba(0,229,200,0.5); text-transform: uppercase; margin-bottom: 44px; }
+.progress-wrap { width: 460px; max-width: 88vw; margin-bottom: 14px; }
+.progress-label { display: flex; justify-content: space-between; font-size: 10px; letter-spacing: 0.12em; color: rgba(0,229,200,0.45); margin-bottom: 7px; }
+.progress-track { height: 2px; background: rgba(0,229,200,0.1); overflow: hidden; }
+.progress-fill { height: 100%; background: #00e5c8; width: 0%; transition: width 0.25s ease; }
+.status-text { font-size: 10px; letter-spacing: 0.14em; color: rgba(0,229,200,0.4); height: 15px; text-align: center; }
+.ticker { position: fixed; bottom: 0; left: 0; right: 0; height: 30px; background: rgba(2,8,12,0.97); border-top: 1px solid rgba(0,229,200,0.2); display: flex; align-items: center; overflow: hidden; font-size: 10px; color: rgba(0,229,200,0.5); letter-spacing: 0.08em; z-index: 50; }
+.ticker-inner { white-space: nowrap; animation: ticker 30s linear infinite; padding-left: 100%; }
+@keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
 </style>
 </head>
 <body>
 
 <div class="header"></div>
-<div class="corner tl"></div>
-<div class="corner tr"></div>
-<div class="corner bl"></div>
-<div class="corner br"></div>
+<div class="corner tl"></div><div class="corner tr"></div>
+<div class="corner bl"></div><div class="corner br"></div>
 <div class="gridline" style="top:26%"></div>
 <div class="gridline" style="top:74%"></div>
 
@@ -255,7 +61,6 @@ body::before {
     <span id="clock">--:--:--</span>
     <span>BUILD 4.7.2</span>
 </div>
-
 <div class="info-right">
     <span>HALORP SERVER</span>
     <span>-- / 64 ONLINE</span>
@@ -263,33 +68,23 @@ body::before {
 
 <div class="main">
 
-    <!-- Single SVG — ring and logo combined, no CSS positioning tricks -->
+    <!-- Fully static SVG — no animation, no layering issues -->
     <svg width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:28px; display:block;">
-        <!-- Spinning outer ring group using SVG-native animation -->
-        <g>
-            <animateTransform attributeName="transform" type="rotate" from="0 75 75" to="360 75 75" dur="14s" repeatCount="indefinite"/>
-            <circle cx="75" cy="75" r="70" stroke="rgba(0,229,200,0.45)" stroke-width="1.5" stroke-dasharray="10 5"/>
-            <circle cx="75" cy="75" r="55" stroke="rgba(0,229,200,0.1)" stroke-width="1"/>
-            <g stroke="rgba(0,229,200,0.7)" stroke-width="1.5">
-                <line x1="75" y1="5"   x2="75" y2="16"/>
-                <line x1="75" y1="134" x2="75" y2="145"/>
-                <line x1="5"  y1="75"  x2="16" y2="75"/>
-                <line x1="134" y1="75" x2="145" y2="75"/>
-            </g>
-            <g stroke="rgba(0,229,200,0.25)" stroke-width="1">
-                <line x1="124.5" y1="25.5" x2="119" y2="31"/>
-                <line x1="25.5"  y1="25.5" x2="31"  y2="31"/>
-                <line x1="124.5" y1="124.5" x2="119" y2="119"/>
-                <line x1="25.5"  y1="124.5" x2="31"  y2="119"/>
-            </g>
-        </g>
-        <!-- Static logo — drawn after the ring so it sits on top -->
+        <circle cx="75" cy="75" r="70" stroke="rgba(0,229,200,0.4)"  stroke-width="1.5" stroke-dasharray="10 5"/>
+        <circle cx="75" cy="75" r="55" stroke="rgba(0,229,200,0.08)" stroke-width="1"/>
+        <line x1="75" y1="5"   x2="75" y2="16"  stroke="rgba(0,229,200,0.7)" stroke-width="1.5"/>
+        <line x1="75" y1="134" x2="75" y2="145" stroke="rgba(0,229,200,0.7)" stroke-width="1.5"/>
+        <line x1="5"  y1="75"  x2="16" y2="75"  stroke="rgba(0,229,200,0.7)" stroke-width="1.5"/>
+        <line x1="134" y1="75" x2="145" y2="75" stroke="rgba(0,229,200,0.7)" stroke-width="1.5"/>
+        <line x1="124.5" y1="25.5" x2="119" y2="31"  stroke="rgba(0,229,200,0.25)" stroke-width="1"/>
+        <line x1="25.5"  y1="25.5" x2="31"  y2="31"  stroke="rgba(0,229,200,0.25)" stroke-width="1"/>
+        <line x1="124.5" y1="124.5" x2="119" y2="119" stroke="rgba(0,229,200,0.25)" stroke-width="1"/>
+        <line x1="25.5"  y1="124.5" x2="31"  y2="119" stroke="rgba(0,229,200,0.25)" stroke-width="1"/>
         <circle cx="75" cy="75" r="41" fill="#060a0d" stroke="rgba(0,229,200,0.5)" stroke-width="1"/>
-        <text x="75" y="70" text-anchor="middle" font-family="'Courier New',monospace" font-size="13" font-weight="700" fill="#00e5c8" letter-spacing="2">MGC</text>
-        <text x="75" y="85" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" font-weight="400" fill="rgba(0,229,200,0.65)" letter-spacing="2">HALORP</text>
+        <text x="75" y="70" text-anchor="middle" font-family="Courier New,monospace" font-size="13" font-weight="700" fill="#00e5c8" letter-spacing="2">MGC</text>
+        <text x="75" y="85" text-anchor="middle" font-family="Courier New,monospace" font-size="9"  fill="rgba(0,229,200,0.65)" letter-spacing="2">HALORP</text>
     </svg>
 
-    <!-- Text block — completely separate from ring -->
     <div class="community">Multi-Gaming Community &nbsp;//&nbsp; presents</div>
     <div class="title">HaloRP</div>
     <div class="subtitle">// Personnel &amp; Deployment System &nbsp;//&nbsp; Encrypted Channel Active</div>
@@ -303,61 +98,30 @@ body::before {
             <div class="progress-fill" id="bar"></div>
         </div>
     </div>
-
     <div class="status-text" id="status">INITIALIZING TACTICAL GRID...</div>
-
 </div>
 
 <div class="ticker">
     <div class="ticker-inner">
-        &nbsp;&nbsp;&nbsp;// UNSC TACTICAL COMMAND SYSTEM — ENCRYPTED CHANNEL ACTIVE &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; MULTI-GAMING COMMUNITY — HALORP SERVER &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; PERSONNEL &amp; DEPLOYMENT SYSTEM BUILD 4.7.2 &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; ALL STATIONS REPORT READY &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; COVENANT THREAT LEVEL: ELEVATED &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; SECTOR ALPHA ONLINE &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; UNSC TACTICAL COMMAND SYSTEM — ENCRYPTED CHANNEL ACTIVE &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; MULTI-GAMING COMMUNITY — HALORP SERVER &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;// UNSC TACTICAL COMMAND SYSTEM — ENCRYPTED CHANNEL ACTIVE &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; MULTI-GAMING COMMUNITY — HALORP SERVER &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; PERSONNEL &amp; DEPLOYMENT SYSTEM BUILD 4.7.2 &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; ALL STATIONS REPORT READY &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; COVENANT THREAT LEVEL: ELEVATED &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp; SECTOR ALPHA ONLINE &nbsp;&nbsp;&nbsp;//&nbsp;&nbsp;&nbsp;
     </div>
 </div>
 
 <script>
-var statuses = [
-    "INITIALIZING TACTICAL GRID...",
-    "LOADING UNSC ASSETS...",
-    "ESTABLISHING ENCRYPTED CHANNEL...",
-    "SYNCING PERSONNEL DATABASE...",
-    "VERIFYING SECURITY CLEARANCE...",
-    "LOADING TERRAIN DATA...",
-    "CALIBRATING WEAPON SYSTEMS...",
-    "LOADING COVENANT THREAT PROFILES...",
-    "SYNCHRONIZING SQUAD ROSTERS...",
-    "DECRYPTING MISSION BRIEFING...",
-    "CONNECTION ESTABLISHED — WELCOME, OPERATIVE"
-];
-
-var progress = 0, statusIdx = 0;
-var bar = document.getElementById('bar');
-var pct = document.getElementById('pct');
-var statusEl = document.getElementById('status');
-
-function tick() {
-    if (progress >= 100) return;
-    progress = Math.min(100, progress + Math.random() * 2.5 + 0.4);
-    bar.style.width = progress + '%';
-    pct.textContent = Math.floor(progress) + '%';
-    var n = Math.floor((progress / 100) * (statuses.length - 1));
-    if (n !== statusIdx && n < statuses.length) {
-        statusIdx = n;
-        statusEl.textContent = statuses[statusIdx];
-    }
-    setTimeout(tick, Math.random() * 130 + 40);
+var statuses=["INITIALIZING TACTICAL GRID...","LOADING UNSC ASSETS...","ESTABLISHING ENCRYPTED CHANNEL...","SYNCING PERSONNEL DATABASE...","VERIFYING SECURITY CLEARANCE...","LOADING TERRAIN DATA...","CALIBRATING WEAPON SYSTEMS...","LOADING COVENANT THREAT PROFILES...","SYNCHRONIZING SQUAD ROSTERS...","DECRYPTING MISSION BRIEFING...","CONNECTION ESTABLISHED — WELCOME, OPERATIVE"];
+var progress=0,statusIdx=0;
+var bar=document.getElementById('bar'),pct=document.getElementById('pct'),statusEl=document.getElementById('status');
+function tick(){
+    if(progress>=100)return;
+    progress=Math.min(100,progress+Math.random()*2.5+0.4);
+    bar.style.width=progress+'%';
+    pct.textContent=Math.floor(progress)+'%';
+    var n=Math.floor((progress/100)*(statuses.length-1));
+    if(n!==statusIdx&&n<statuses.length){statusIdx=n;statusEl.textContent=statuses[statusIdx];}
+    setTimeout(tick,Math.random()*130+40);
 }
-
-function updateClock() {
-    var now = new Date();
-    var h = String(now.getHours()).padStart(2,'0');
-    var m = String(now.getMinutes()).padStart(2,'0');
-    var s = String(now.getSeconds()).padStart(2,'0');
-    document.getElementById('clock').textContent = h + ':' + m + ':' + s;
-}
-
-tick();
-setInterval(updateClock, 1000);
-updateClock();
+function updateClock(){var now=new Date(),h=String(now.getHours()).padStart(2,'0'),m=String(now.getMinutes()).padStart(2,'0'),s=String(now.getSeconds()).padStart(2,'0');document.getElementById('clock').textContent=h+':'+m+':'+s;}
+tick();setInterval(updateClock,1000);updateClock();
 </script>
 </body>
 </html>
