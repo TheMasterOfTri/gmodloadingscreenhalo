@@ -263,35 +263,30 @@ body::before {
 
 <div class="main">
 
-    <!-- Ring sits fully above the text -->
-    <div class="ring-wrap">
-        <svg class="ring-svg" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- outer dashed ring -->
+    <!-- Single SVG — ring and logo combined, no CSS positioning tricks -->
+    <svg width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:28px; display:block;">
+        <!-- Spinning outer ring group -->
+        <g style="transform-origin:75px 75px; animation:spin 14s linear infinite;">
             <circle cx="75" cy="75" r="70" stroke="rgba(0,229,200,0.45)" stroke-width="1.5" stroke-dasharray="10 5"/>
-            <!-- inner faint ring -->
             <circle cx="75" cy="75" r="55" stroke="rgba(0,229,200,0.1)" stroke-width="1"/>
-            <!-- cardinal tick marks -->
             <g stroke="rgba(0,229,200,0.7)" stroke-width="1.5">
                 <line x1="75" y1="5"   x2="75" y2="16"/>
                 <line x1="75" y1="134" x2="75" y2="145"/>
                 <line x1="5"  y1="75"  x2="16" y2="75"/>
                 <line x1="134" y1="75" x2="145" y2="75"/>
             </g>
-            <!-- diagonal tick marks -->
             <g stroke="rgba(0,229,200,0.25)" stroke-width="1">
                 <line x1="124.5" y1="25.5" x2="119" y2="31"/>
                 <line x1="25.5"  y1="25.5" x2="31"  y2="31"/>
                 <line x1="124.5" y1="124.5" x2="119" y2="119"/>
                 <line x1="25.5"  y1="124.5" x2="31"  y2="119"/>
             </g>
-        </svg>
-        <div class="ring-inner">
-            <div class="ring-logo">
-                <span class="logo-top">MGC</span>
-                <span class="logo-bot">HALORP</span>
-            </div>
-        </div>
-    </div>
+        </g>
+        <!-- Static logo circle — always centred, never moves -->
+        <circle cx="75" cy="75" r="41" fill="#060a0d" stroke="rgba(0,229,200,0.5)" stroke-width="1"/>
+        <text x="75" y="70" text-anchor="middle" font-family="'Courier New',monospace" font-size="13" font-weight="700" fill="#00e5c8" letter-spacing="2">MGC</text>
+        <text x="75" y="85" text-anchor="middle" font-family="'Courier New',monospace" font-size="9" font-weight="400" fill="rgba(0,229,200,0.65)" letter-spacing="2">HALORP</text>
+    </svg>
 
     <!-- Text block — completely separate from ring -->
     <div class="community">Multi-Gaming Community &nbsp;//&nbsp; presents</div>
